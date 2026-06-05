@@ -10,6 +10,21 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
+const themeInitScript = `(() => {
+  try {
+    const savedTheme = localStorage.getItem("gallery-theme");
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const initialTheme =
+      savedTheme === "light" || savedTheme === "dark"
+        ? savedTheme
+        : prefersDark
+          ? "dark"
+          : "light";
+
+    document.documentElement.classList.toggle("dark", initialTheme === "dark");
+  } catch {}
+})();`;
+
 export const metadata: Metadata = {
   title: "Photo Gallery & Portfolio",
   description: "A curated collection of photographs and creative works showcasing a personal portfolio.",
@@ -22,6 +37,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body
         className={`${geistSans.variable} antialiased`}
       >

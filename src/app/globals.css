@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+/* Enable dark:* utilities when the root html element has class="dark". */
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
