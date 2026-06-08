@@ -26,15 +26,13 @@ function applyTheme(theme: Theme) {
 }
 
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>(getInitialTheme);
+  const [theme, setTheme] = useState<Theme>("light");
 
   useEffect(() => {
     const initialTheme = getInitialTheme();
     setTheme(initialTheme);
     applyTheme(initialTheme);
   }, []);
-
-  const nextTheme = theme === "dark" ? "light" : "dark";
 
   return (
     <button
@@ -48,9 +46,9 @@ export function ThemeToggle() {
         });
       }}
       className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-slate-300 text-slate-700 transition-colors hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-800"
-      aria-label={`Switch to ${nextTheme} mode`}
+      aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
       aria-pressed={theme === "dark"}
-      title={`Switch to ${nextTheme} mode`}
+      title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
     >
       {theme === "dark" ? <Sun className="h-5 w-5" aria-hidden="true" /> : <Moon className="h-5 w-5" aria-hidden="true" />}
     </button>
