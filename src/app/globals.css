@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
   --background: #ffffff;
@@ -455,4 +456,212 @@ body {
   .gallery-card {
     background-color: #1e293b;
   }
+}
+
+:root.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+}
+
+.light {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+.dark .page-gradient {
+  background: linear-gradient(to bottom right, #0f172a, #1e293b);
+}
+
+.light .page-gradient {
+  background: linear-gradient(to bottom right, #f8fafc, #e2e8f0);
+}
+
+.dark .card-base,
+.dark .card-elevated,
+.dark .card-feature,
+.dark .card-stats,
+.dark .gallery-card {
+  background-color: #1e293b;
+}
+
+.light .card-base,
+.light .card-elevated,
+.light .card-feature,
+.light .card-stats,
+.light .gallery-card {
+  background-color: #ffffff;
+}
+
+.dark .btn-secondary {
+  border-color: #4b5563;
+  color: #d1d5db;
+}
+
+.light .btn-secondary {
+  border-color: #d1d5db;
+  color: #374151;
+}
+
+.dark .btn-secondary:hover {
+  background-color: #374151;
+}
+
+.light .btn-secondary:hover {
+  background-color: #f9fafb;
+}
+
+.dark .nav-link {
+  color: #d1d5db;
+}
+
+.light .nav-link {
+  color: #4b5563;
+}
+
+.dark .nav-link:hover {
+  color: #ffffff;
+}
+
+.light .nav-link:hover {
+  color: #111827;
+}
+
+.dark .form-input,
+.dark .form-select {
+  border-color: #4b5563;
+  background-color: #374151;
+  color: #ffffff;
+}
+
+.light .form-input,
+.light .form-select {
+  border-color: #d1d5db;
+  background-color: #ffffff;
+  color: #111827;
+}
+
+.dark .form-input::placeholder {
+  color: #9ca3af;
+}
+
+.light .form-input::placeholder {
+  color: #6b7280;
+}
+
+.dark .status-active {
+  background-color: #14532d;
+  color: #bbf7d0;
+}
+
+.light .status-active {
+  background-color: #bbf7d0;
+  color: #14532d;
+}
+
+.dark .status-private {
+  background-color: #581c87;
+  color: #e9d5ff;
+}
+
+.light .status-private {
+  background-color: #e9d5ff;
+  color: #581c87;
+}
+
+.dark .status-draft {
+  background-color: #9a3412;
+  color: #fed7aa;
+}
+
+.light .status-draft {
+  background-color: #fed7aa;
+  color: #9a3412;
+}
+
+.dark .icon-container-blue {
+  background-color: #1e3a8a;
+}
+
+.light .icon-container-blue {
+  background-color: #dbeafe;
+}
+
+.dark .icon-container-green {
+  background-color: #14532d;
+}
+
+.light .icon-container-green {
+  background-color: #dcfce7;
+}
+
+.dark .icon-container-purple {
+  background-color: #581c87;
+}
+
+.light .icon-container-purple {
+  background-color: #f3e8ff;
+}
+
+.dark .icon-container-orange {
+  background-color: #9a3412;
+}
+
+.light .icon-container-orange {
+  background-color: #fed7aa;
+}
+
+.dark .hover-bg:hover {
+  background-color: rgba(55, 65, 81, 0.5);
+}
+
+.light .hover-bg:hover {
+  background-color: #f9fafb;
+}
+
+.dark .progress-bar {
+  background-color: #374151;
+}
+
+.light .progress-bar {
+  background-color: #e5e7eb;
+}
+
+.dark .drop-zone {
+  border-color: #4b5563;
+}
+
+.light .drop-zone {
+  border-color: #d1d5db;
+}
+
+.dark .drop-zone-active {
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+.light .drop-zone-active {
+  background-color: #eff6ff;
+}
+
+.dark .drop-zone-inactive:hover {
+  border-color: #3b82f6;
+}
+
+.light .drop-zone-inactive:hover {
+  border-color: #60a5fa;
+}
+
+.dark .table-row {
+  border-color: #374151;
+}
+
+.light .table-row {
+  border-color: #e5e7eb;
+}
+
+.dark .table-row:hover {
+  background-color: rgba(55, 65, 81, 0.5);
+}
+
+.light .table-row:hover {
+  background-color: #f9fafb;
 }
