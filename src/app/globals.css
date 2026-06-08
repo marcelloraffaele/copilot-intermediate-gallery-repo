@@ -463,7 +463,7 @@ body {
   --foreground: #ededed;
 }
 
-.light {
+:root.light {
   --background: #ffffff;
   --foreground: #171717;
 }

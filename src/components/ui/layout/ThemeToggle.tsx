@@ -7,23 +7,29 @@ type Theme = "light" | "dark";
 
 const STORAGE_KEY = "theme";
 
+function getInitialTheme(): Theme {
+  if (typeof window === "undefined") {
+    return "light";
+  }
+
+  const storedTheme = window.localStorage.getItem(STORAGE_KEY);
+  if (storedTheme === "dark" || storedTheme === "light") {
+    return storedTheme;
+  }
+
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+}
+
 function applyTheme(theme: Theme) {
   document.documentElement.classList.remove("light", "dark");
   document.documentElement.classList.add(theme);
 }
 
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>("light");
+  const [theme, setTheme] = useState<Theme>(getInitialTheme);
 
   useEffect(() => {
-    const storedTheme = window.localStorage.getItem(STORAGE_KEY);
-    const initialTheme: Theme =
-      storedTheme === "dark" || storedTheme === "light"
-        ? storedTheme
-        : window.matchMedia("(prefers-color-scheme: dark)").matches
-          ? "dark"
-          : "light";
-
+    const initialTheme = getInitialTheme();
     setTheme(initialTheme);
     applyTheme(initialTheme);
   }, []);
@@ -34,9 +40,12 @@ export function ThemeToggle() {
     <button
       type="button"
       onClick={() => {
-        setTheme(nextTheme);
-        applyTheme(nextTheme);
-        window.localStorage.setItem(STORAGE_KEY, nextTheme);
+        setTheme((currentTheme) => {
+          const updatedTheme = currentTheme === "dark" ? "light" : "dark";
+          applyTheme(updatedTheme);
+          window.localStorage.setItem(STORAGE_KEY, updatedTheme);
+          return updatedTheme;
+        });
       }}
       className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-slate-300 text-slate-700 transition-colors hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-800"
       aria-label={`Switch to ${nextTheme} mode`}
