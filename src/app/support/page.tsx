@@ -1,6 +1,6 @@
 'use client';
 
-import { ChangeEvent, FormEvent, useMemo, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { Headphones, Mail, MessageSquareMore } from "lucide-react";
 import { Hero, SectionContainer, SectionTitle } from "@/components/ui";
 
@@ -18,12 +18,35 @@ const initialFormData = {
   message: "",
 };
 
+const contactHighlights = [
+  {
+    icon: Headphones,
+    title: "Supporto dedicato",
+    description: "Raccogli tutte le richieste in un unico punto, con risposta rapida del team.",
+  },
+  {
+    icon: MessageSquareMore,
+    title: "Categorie chiare",
+    description: "Indica subito il contesto della richiesta per ricevere assistenza più mirata.",
+  },
+  {
+    icon: Mail,
+    title: "Conferma via email",
+    description: "Riceverai una conferma via email al termine dell'invio della richiesta.",
+  },
+];
+
 type FormData = typeof initialFormData;
 type FormField = keyof FormData;
 type FormErrors = Partial<Record<FormField, string>>;
 type SubmitStatus = "idle" | "loading" | "success" | "error";
 
-const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+function isValidEmail(email: string) {
+  const emailField = document.createElement("input");
+  emailField.type = "email";
+  emailField.value = email;
+  return emailField.validity.valid;
+}
 
 function validateForm(data: FormData): FormErrors {
   const errors: FormErrors = {};
@@ -34,7 +57,7 @@ function validateForm(data: FormData): FormErrors {
 
   if (!data.email.trim()) {
     errors.email = "Inserisci il tuo indirizzo email.";
-  } else if (!emailPattern.test(data.email)) {
+  } else if (!isValidEmail(data.email)) {
     errors.email = "Inserisci un indirizzo email valido.";
   }
 
@@ -53,7 +76,7 @@ function validateForm(data: FormData): FormErrors {
 
 function mockSubmitSupportRequest(data: FormData) {
   return new Promise<void>((resolve, reject) => {
-    window.setTimeout(() => {
+    setTimeout(() => {
       const shouldFail =
         data.email.toLowerCase().includes("fail") ||
         data.message.toLowerCase().includes("errore di test");
@@ -73,27 +96,6 @@ export default function SupportPage() {
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitStatus, setSubmitStatus] = useState<SubmitStatus>("idle");
   const [statusMessage, setStatusMessage] = useState("");
-
-  const contactHighlights = useMemo(
-    () => [
-      {
-        icon: Headphones,
-        title: "Supporto dedicato",
-        description: "Raccogli tutte le richieste in un unico punto, con risposta rapida del team.",
-      },
-      {
-        icon: MessageSquareMore,
-        title: "Categorie chiare",
-        description: "Indica subito il contesto della richiesta per ricevere assistenza più mirata.",
-      },
-      {
-        icon: Mail,
-        title: "Conferma via email",
-        description: "Riceverai un riscontro simulato al termine dell'invio in questa prima iterazione mock.",
-      },
-    ],
-    []
-  );
 
   const handleFieldChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -145,7 +147,9 @@ export default function SupportPage() {
       setStatusMessage("Richiesta inviata con successo. Ti ricontatteremo al più presto.");
     } catch {
       setSubmitStatus("error");
-      setStatusMessage("Invio non riuscito. Riprova tra qualche istante.");
+      setStatusMessage(
+        "Invio non riuscito. Verifica i dati inseriti e riprova, oppure contattaci direttamente via email."
+      );
     }
   };
 
@@ -164,7 +168,7 @@ export default function SupportPage() {
       />
 
       <SectionContainer className="pt-0">
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+        <div className="grid gap-8 lg:grid-cols-[1fr_1.2fr]">
           <div className="card-base p-6">
             <SectionTitle title="Prima di inviare" className="!mb-6" />
             <div className="space-y-6">
@@ -286,7 +290,7 @@ export default function SupportPage() {
                   value={formData.message}
                   onChange={handleFieldChange}
                   aria-invalid={Boolean(errors.message)}
-                  aria-describedby={errors.message ? "message-error" : "message-help"}
+                  aria-describedby={errors.message ? "message-help message-error" : "message-help"}
                   className="form-input min-h-40 resize-y"
                   placeholder="Descrivi il problema o la richiesta di supporto."
                 />

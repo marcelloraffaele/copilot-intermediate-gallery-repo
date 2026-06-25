@@ -15,10 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className="antialiased"
-        style={{ fontFamily: "system-ui, sans-serif" }}
-      >
+      <body className="antialiased">
         {/* Navigation Header */}
         <header className="border-b bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm sticky top-0 z-40">
           <div className="container mx-auto px-4 py-4">
@@ -29,7 +26,10 @@ export default function RootLayout({
                   Portfolio Gallery
                 </h1>
               </Link>
-              <nav className="flex flex-wrap items-center justify-center gap-4 md:gap-6">
+              <nav
+                aria-label="Main navigation"
+                className="flex flex-wrap items-center justify-start gap-4 md:justify-end md:gap-6"
+              >
                 <Link href="/gallery" className="nav-link">
                   Gallery
                 </Link>
