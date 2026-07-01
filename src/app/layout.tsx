@@ -3,7 +3,7 @@ import { Geist } from "next/font/google";
 import Link from "next/link";
 import { Camera } from "lucide-react";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
-import { themeInitializationScript } from "@/lib/theme";
+import { getThemeInitializationScript } from "@/lib/theme";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -26,7 +26,7 @@ export default function RootLayout({
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: themeInitializationScript,
+            __html: getThemeInitializationScript(),
           }}
         />
       </head>
