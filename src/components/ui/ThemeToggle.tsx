@@ -2,10 +2,9 @@
 
 import { Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
+import { THEME_STORAGE_KEY } from "@/lib/theme";
 
 type Theme = "light" | "dark";
-
-const THEME_STORAGE_KEY = "theme";
 
 function getSystemTheme(): Theme {
   return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
@@ -28,7 +27,10 @@ export function ThemeToggle() {
 
   const handleToggle = () => {
     setTheme((currentTheme) => {
-      const nextTheme = currentTheme === "dark" ? "light" : "dark";
+      const isCurrentThemeDark =
+        currentTheme === "dark" ||
+        (currentTheme === null && document.documentElement.classList.contains("dark"));
+      const nextTheme = isCurrentThemeDark ? "light" : "dark";
       applyTheme(nextTheme);
       localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
       return nextTheme;
